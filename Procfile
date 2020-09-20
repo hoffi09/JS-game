@@ -1,1 +1,1 @@
-web: npx run start
+web: node server.js
