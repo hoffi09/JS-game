@@ -1,16 +1,20 @@
 const http = require('http');
 const fs = require('fs');
-const port =  process.env.PORT || 3000;
+const port =  3000;
 
 const server = http.createServer(function(req, res){
-    res.write('yo');
-    //fs.readFile('index.html'); <-jebane gówno
+    fs.readFile('./src/index.html', 'utf8', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log(data);
+    })
     res.end();
 })
 
 server.listen(port, function(error){
     if(error){
-        console.log('wrong', error)
+        console.log('Wrong', error)
     }else{
         console.log('Running');
     }
