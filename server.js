@@ -1,29 +1,17 @@
-const http = require('http');
-const fs = require('fs');
-const port = process.env.PORT || 3000;
+const path = require('path');
+const express = require('express');
 
-const server = http.createServer(function(req, res){
-    // fs.readFile('./src/index.html', 'utf8', function (err,data) {
-    //     if (err) {
-    //       return console.log(err);
-    //     }
-    //     console.log(data);
-    // })
-    res.writeHead(200, {'Content-type':'text/html'})
-    fs.readFile('./src/index.html', function(error, data){
-        if(error){
-            res.writeHead(404);
-        }else{
-            res.write(data);
-        }
-        res.end();
-    })
-})
+const app = express();
+const DIST_DIR = path.join(__dirname, '/src');
+const HTML_FILE = path.join(DIST_DIR, 'index.html');
 
-server.listen(port, function(error){
-    if(error){
-        console.log('Wrong', error)
-    }else{
-        console.log('Running');
-    }
-})
+app.use(express.static(DIST_DIR));
+app.get('*', (req, res) => {
+  res.sendFile(HTML_FILE);
+});
+
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+
+});
